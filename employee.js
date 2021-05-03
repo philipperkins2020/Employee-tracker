@@ -114,7 +114,7 @@ const addRole = () => {
             name: "department_id",
             type: "list",
             message: "What department will this role be in?",
-            choices: ["1-Ownership", "2-Front Office", "3-Scouting", "4-Coaching", "5-Player Personnel", "6-Sales", "7-Medical", "8-Customer Service"]
+            choices: ["1-Ownership", "2-Front Office", "3-Scouting", "4-Coaching", "5-Player Personnel", "6-Sales", "7-Medical", "8-Customer Service","9-Food", " 10-Team Store"]
         }
 
     ]).then(function (res) {
