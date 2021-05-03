@@ -6,13 +6,12 @@ const { async } = require('rxjs');
 const connection = mysql.createConnection({
     host: 'localhost',
 
-    // Your port; if not 3306
     port: 3306,
 
-    // Your username
+    
     user: 'root',
 
-    // Be sure to update with your own MySQL password!
+   
     password: 'Dakzeke88!',
     database: 'employeeDB',
 });
@@ -140,7 +139,7 @@ const addEmployee = async () => {
     }
     )
 
-    connection.query(`SELECT * from roles,` , (err, roleList) => {
+    connection.query(`SELECT * from roles` , (err, roleList) => {
         if (
             err) {
             console.log(err)
@@ -178,7 +177,7 @@ const addEmployee = async () => {
 
             connection.query(
                 "INSERT INTO employee  (first_name,last_name,role_id,department_id) VALUES(?,?,?,?) ",
-                [res.first_name, res.last_name, res.role_id, res.department_id.split('-')[0]],
+                [res.first_name, res.last_name, res.role_id, res.department_id],
 
                 function (err) {
                     if (err) throw err
@@ -220,47 +219,11 @@ const viewEmployee = () => {
 }
 
 const updateEmployeeRole = () => {
-    connection.query(
+    connection.query( `SELECT * from employee`,
         function (err, res) {
             if (err) throw err
-            console.log(res)
-            inquirer.prompt([
-                {
-                    name: "lastName",
-                    type: "rawlist",
-                    choices: function () {
-                        const lastName = [];
-                        for (const i = 0; i < res.length; i++) {
-                            lastName.push(res[i].last_name);
-                        }
-                        return lastName;
-                    },
-                    message: "What is the Employee's last name? ",
-                },
-                {
-                    name: "role",
-                    type: "rawlist",
-                    message: "What is the Employees new title? ",
-                    choices: selectRole()
-                },
-            ]).then(function (val) {
-                var roleId = selectRole().indexOf(val.role) + 1
-                connection.query("UPDATE employee SET WHERE ?",
-                    {
-                        last_name: val.lastName
-
-                    },
-                    {
-                        role_id: roleId
-
-                    },
-                    function (err) {
-                        if (err) throw err
-                        console.table(val)
-                        employeeInfo()
-                    })
-
-            });
+            console.table(res)
+            
         });
 
 }
